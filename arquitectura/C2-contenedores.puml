@@ -1,0 +1,52 @@
+@startuml C2_Contenedores_Sistema_Nomina
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title C4 - Nivel 2: Contenedores del Sistema de Nómina Colombiano
+
+Person(empleado, "Empleado", "Consulta desprendibles y certificados.")
+Person(analista, "Analista de nómina / RR. HH.", "Administra empleados, novedades y periodos.")
+Person(contador, "Contador / Finanzas", "Consulta reportes y costos.")
+
+System_Ext(dian, "DIAN", "Validación de nómina electrónica.")
+System_Ext(pila, "Operador PILA", "Procesamiento de aportes.")
+System_Ext(banco, "Entidad bancaria", "Dispersión de pagos.")
+
+System_Boundary(sistema, "Sistema de Nómina Colombiano") {
+    Container(portal, "Portal web", "React / TypeScript", "Interfaz para empleados, RR. HH. y finanzas.")
+    Container(api, "API Gateway", "Python / FastAPI", "Punto de entrada, autenticación de solicitudes y enrutamiento.")
+    Container(identidad, "Servicio de identidad y acceso", "Python / FastAPI", "Autenticación, autorización y roles.")
+    Container(empleados, "Servicio de empleados y novedades", "Python / FastAPI", "Administra datos laborales, contratos y novedades.")
+    Container(liquidacion, "Servicio de liquidación", "Python / FastAPI", "Calcula salarios, horas, recargos, deducciones, prestaciones y aportes.")
+    Container(cumplimiento, "Servicio de cumplimiento", "Python / FastAPI", "Genera y transmite nómina electrónica y archivos de aportes.")
+    Container(pagos, "Servicio de pagos", "Python / FastAPI", "Prepara órdenes de pago y consulta estados de dispersión.")
+    Container(reportes, "Servicio de reportes", "Python / FastAPI", "Genera desprendibles, certificados e informes.")
+    ContainerDb(db, "Bases de datos por servicio", "PostgreSQL", "Persistencia de empleados, novedades, liquidaciones, cumplimiento, pagos y reportes.")
+    ContainerQueue(eventos, "Mensajería de eventos", "RabbitMQ", "Comunicación asíncrona entre servicios y manejo de procesos.")
+}
+
+Rel(empleado, portal, "Consulta información", "HTTPS")
+Rel(analista, portal, "Registra novedades y administra nómina", "HTTPS")
+Rel(contador, portal, "Consulta informes", "HTTPS")
+Rel(portal, api, "Consume API", "HTTPS/JSON")
+Rel(api, identidad, "Valida identidad y permisos", "HTTPS")
+Rel(api, empleados, "Gestiona información laboral", "HTTPS/JSON")
+Rel(api, liquidacion, "Solicita liquidaciones", "HTTPS/JSON")
+Rel(api, cumplimiento, "Solicita documentos y aportes", "HTTPS/JSON")
+Rel(api, pagos, "Solicita pagos", "HTTPS/JSON")
+Rel(api, reportes, "Solicita informes", "HTTPS/JSON")
+Rel(empleados, db, "Lee y escribe sus datos", "SQL")
+Rel(liquidacion, db, "Lee datos laborales y guarda resultados", "SQL")
+Rel(cumplimiento, db, "Lee liquidaciones y registra respuestas", "SQL")
+Rel(pagos, db, "Lee órdenes y registra estados", "SQL")
+Rel(reportes, db, "Consulta datos autorizados", "SQL")
+Rel(empleados, eventos, "Publica novedades", "AMQP")
+Rel(liquidacion, eventos, "Publica liquidaciones calculadas", "AMQP")
+Rel(eventos, cumplimiento, "Notifica liquidaciones listas", "AMQP")
+Rel(eventos, pagos, "Notifica pagos aprobados", "AMQP")
+Rel(eventos, reportes, "Notifica cambios relevantes", "AMQP")
+Rel(cumplimiento, dian, "Transmite nómina electrónica", "API")
+Rel(cumplimiento, pila, "Entrega información de aportes", "API/Archivo seguro")
+Rel(pagos, banco, "Envía órdenes de dispersión", "API/Archivo seguro")
+
+SHOW_LEGEND()
+@enduml
