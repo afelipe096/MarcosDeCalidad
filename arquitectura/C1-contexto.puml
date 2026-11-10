@@ -1,0 +1,24 @@
+@startuml C1_Contexto_Sistema_Nomina
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title C4 - Nivel 1: Contexto del Sistema de Nómina Colombiano
+
+Person(empleado, "Empleado", "Consulta desprendibles de pago y certificados laborales.")
+Person(analista, "Analista de nómina / RR. HH.", "Registra novedades, administra empleados y prepara los periodos de nómina.")
+Person(contador, "Contador / Finanzas", "Revisa costos, provisiones y reportes de nómina.")
+
+System(nomina, "Sistema de Nómina Colombiano", "Administra empleados, novedades, liquidación de nómina, prestaciones, aportes y pagos conforme a la normativa colombiana.")
+
+System_Ext(dian, "DIAN", "Recibe y valida el documento soporte de pago de nómina electrónica.")
+System_Ext(pila, "Operador PILA", "Procesa la información para liquidación y pago de aportes al sistema de seguridad social.")
+System_Ext(banco, "Entidad bancaria", "Recibe instrucciones para dispersión de pagos a empleados.")
+
+Rel(empleado, nomina, "Consulta desprendibles y certificados", "HTTPS")
+Rel(analista, nomina, "Gestiona empleados, novedades y periodos", "HTTPS")
+Rel(contador, nomina, "Consulta reportes y costos", "HTTPS")
+Rel(nomina, dian, "Transmite nómina electrónica y recibe validaciones", "API")
+Rel(nomina, pila, "Envía información de aportes", "Archivo/API")
+Rel(nomina, banco, "Envía órdenes de pago", "API/Archivo seguro")
+
+SHOW_LEGEND()
+@enduml
