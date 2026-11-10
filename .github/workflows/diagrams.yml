@@ -1,0 +1,26 @@
+name: Exportar diagramas C4 a PNG
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "arquitectura/*.puml"
+      - ".github/workflows/diagrams.yml"
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Renderizar diagramas PlantUML
+        run: |
+          docker run --rm -v "$PWD:/workspace" plantuml/plantuml:latest -tpng /workspace/arquitectura/C1-contexto.puml /workspace/arquitectura/C2-contenedores.puml
+
+      - name: Publicar PNG
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagramas-c4-png
+          path: arquitectura/*.png
+          if-no-files-found: error
