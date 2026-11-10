@@ -9,3 +9,4 @@ def mostrar_total():
 
 if __name__ == "__main__":
     mostrar_total()
+
