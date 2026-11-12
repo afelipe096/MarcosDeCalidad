@@ -1,0 +1,1 @@
+# La aplicación de ejemplo no declara dependencias externas.
