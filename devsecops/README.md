@@ -2,22 +2,20 @@
 
 ## Validación de calidad del código
 
-Se incorporó el archivo `linter_failure.py` con dos defectos controlados para demostrar la detección de errores mediante análisis estático:
+El archivo `linter_failure.py` contiene dos errores controlados:
 
 - Espacios en blanco al final de una línea.
 - Uso de una variable no definida.
 
-Se configuró el workflow `.github/workflows/linter-failure.yml` para ejecutar Flake8 con las reglas de estilo y nombres seleccionadas. El job `deploy` depende del resultado de `lint` y está condicionado a que la validación termine correctamente. Por eso, el caso de prueba está preparado para provocar el fallo del linter y bloquear el job de despliegue.
+El workflow `.github/workflows/linter-failure.yml` ejecuta Flake8 con las reglas `E`, `W` y `F`. El job `deploy` depende del resultado del job `lint` y solo se ejecuta cuando la validación termina correctamente.
 
 ## Análisis de seguridad
 
-Se configuró el workflow `.github/workflows/security.yml` con dos herramientas:
+El workflow `.github/workflows/security.yml` ejecuta:
 
-- **Bandit:** analiza el código Python ubicado en `src/` para identificar posibles problemas de seguridad.
-- **pip-audit:** revisa las dependencias declaradas en `devsecops/requirements.txt` frente a vulnerabilidades conocidas.
+- **Bandit:** análisis estático del código Python ubicado en `src/`.
+- **pip-audit:** auditoría de las dependencias declaradas en `requirements.txt`.
 
-Se agregó `src/app.py` como código de ejemplo. El archivo `requirements.txt` se encuentra vacío porque la aplicación de ejemplo no utiliza paquetes externos.
+## Automatización
 
-## Consulta de resultados
-
-Los workflows se ejecutan en GitHub Actions. En la pestaña **Actions** se encuentran los estados, pasos y registros de cada ejecución. La evidencia de aprobación o fallo se toma del resultado real de esos workflows, no solamente de su configuración.
+Los workflows se ejecutan mediante GitHub Actions y pueden iniciarse manualmente o mediante los eventos de publicación configurados en cada archivo YAML.
