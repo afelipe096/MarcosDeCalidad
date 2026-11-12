@@ -11,6 +11,7 @@ permissions:
   contents: write
 
 jobs:
+  # Se convierten las fuentes PlantUML de contexto y contenedores a imágenes PNG.
   render:
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +22,7 @@ jobs:
         run: |
           docker run --rm -v "$PWD:/workspace" plantuml/plantuml:latest -tpng /workspace/arquitectura/C1-contexto.puml /workspace/arquitectura/C2-contenedores.puml
 
+      # Los archivos generados se versionan y se publican como artefacto de la ejecución.
       - name: Guardar PNG en el repositorio
         run: |
           git config user.name "github-actions[bot]"
