@@ -1,5 +1,4 @@
 @startuml C1_Contexto_Sistema_Nomina
-' Se representaron los actores principales, el sistema de nómina y sus integraciones externas.
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
 title C4 - Nivel 1: Contexto del Sistema de Nómina Colombiano
