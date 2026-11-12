@@ -9,6 +9,7 @@ on:
       - ".github/workflows/security.yml"
 
 jobs:
+  # Se ejecutan análisis estático del código y auditoría de dependencias.
   security:
     runs-on: ubuntu-latest
     steps:
