@@ -1,23 +1,23 @@
 # DevSecOps: calidad y seguridad
 
-## Fallo intencional del linter
+## Validación de calidad del código
 
-El archivo linter_failure.py contiene dos defectos controlados:
+Se incorporó el archivo `linter_failure.py` con dos defectos controlados para demostrar la detección de errores mediante análisis estático:
 
 - Espacios en blanco al final de una línea.
 - Uso de una variable no definida.
 
-El workflow .github/workflows/linter-failure.yml ejecuta Flake8. El job deploy depende de lint y solo se ejecuta cuando el linter termina correctamente. Con el archivo actual, el job lint debe fallar y el despliegue debe quedar omitido.
+Se configuró el workflow `.github/workflows/linter-failure.yml` para ejecutar Flake8 con las reglas de estilo y nombres seleccionadas. El job `deploy` depende del resultado de `lint` y está condicionado a que la validación termine correctamente. Por eso, el caso de prueba está preparado para provocar el fallo del linter y bloquear el job de despliegue.
 
-## Escaneos de seguridad
+## Análisis de seguridad
 
-El workflow .github/workflows/security.yml ejecuta:
+Se configuró el workflow `.github/workflows/security.yml` con dos herramientas:
 
-- Bandit para revisar posibles problemas de seguridad en el código Python.
-- pip-audit para revisar vulnerabilidades conocidas en dependencias declaradas.
+- **Bandit:** analiza el código Python ubicado en `src/` para identificar posibles problemas de seguridad.
+- **pip-audit:** revisa las dependencias declaradas en `devsecops/requirements.txt` frente a vulnerabilidades conocidas.
 
-El código de ejemplo está en src/app.py. El archivo requirements.txt está vacío porque el ejemplo no requiere paquetes externos.
+Se agregó `src/app.py` como código de ejemplo. El archivo `requirements.txt` se encuentra vacío porque la aplicación de ejemplo no utiliza paquetes externos.
 
 ## Consulta de resultados
 
-Los resultados se consultan en la pestaña Actions del repositorio. La ejecución de seguridad debe terminar correctamente y mostrar los pasos de Bandit y pip-audit aprobados. La ejecución del linter debe fallar de forma intencional para demostrar que el despliegue queda bloqueado.
+Los workflows se ejecutan en GitHub Actions. En la pestaña **Actions** se encuentran los estados, pasos y registros de cada ejecución. La evidencia de aprobación o fallo se toma del resultado real de esos workflows, no solamente de su configuración.
