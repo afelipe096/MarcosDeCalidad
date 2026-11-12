@@ -1,11 +1,11 @@
 # Arquitectura del Sistema de Nómina Colombiano
 
-En esta carpeta se documentarán los diagramas C4 y las decisiones de arquitectura del sistema.
+En esta carpeta se reunieron los entregables de arquitectura elaborados para la actividad.
 
-## Entregables previstos
+## Entregables incorporados
 
-- C4 Nivel 1 – Diagrama de contexto.
-- C4 Nivel 2 – Diagrama de contenedores.
-- ADR – Registro de decisiones de arquitectura, cuando sea solicitado.
+- **C4 Nivel 1 – Contexto:** se representaron los actores, el sistema de nómina y sus integraciones externas.
+- **C4 Nivel 2 – Contenedores:** se representaron el portal web, el API Gateway, los servicios de negocio, la persistencia, la mensajería y las integraciones.
+- **ADR-001:** se documentó la selección de microservicios y su comparación con una arquitectura monolítica.
 
-Los diagramas se elaborarán a partir de los requisitos de la actividad. Los componentes y tecnologías todavía no definidos se mantendrán como decisiones pendientes, no como hechos asumidos.
+Los diagramas se conservaron en formato PlantUML y se configuró su exportación a PNG mediante GitHub Actions.
