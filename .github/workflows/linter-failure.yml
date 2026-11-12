@@ -8,6 +8,7 @@ on:
       - ".github/workflows/linter-failure.yml"
 
 jobs:
+  # La validación detecta los defectos controlados del archivo de prueba.
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -25,6 +26,7 @@ jobs:
       - name: Ejecutar linter
         run: flake8 devsecops/linter_failure.py --select=E,W,F
 
+  # El despliegue depende del resultado exitoso del job de validación.
   deploy:
     needs: lint
     if: success()
