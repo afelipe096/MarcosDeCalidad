@@ -1,5 +1,4 @@
 @startuml C2_Contenedores_Sistema_Nomina
-' Se detallaron la interfaz, los servicios, la persistencia, la mensajería y las integraciones externas.
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
 title C4 - Nivel 2: Contenedores del Sistema de Nómina Colombiano
